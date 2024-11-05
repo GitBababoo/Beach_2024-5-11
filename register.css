@@ -1,0 +1,31 @@
+
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    background-color: #f0f0f0;
+}
+.register-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    animation: fadeIn 1s;
+}
+.footer-link {
+    color: #fda085;
+}
+.footer-link:hover {
+    text-decoration: underline;
+}
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
