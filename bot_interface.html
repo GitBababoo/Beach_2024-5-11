@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOT กดสินค้าอัตโนมัติ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="text"], input[type="password"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .features {
+            margin-top: 30px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .feature-list li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 BOT กดสินค้าอัตโนมัติ</h1>
+
+        <div class="form-group">
+            <label for="website_url">URL เว็บไซต์:</label>
+            <input type="text" id="website_url" placeholder="https://example-shop.com" value="https://example-shop.com">
+        </div>
+
+        <div class="form-group">
+            <label for="username">ชื่อผู้ใช้:</label>
+            <input type="text" id="username" placeholder="กรุณาใส่ชื่อผู้ใช้">
+        </div>
+
+        <div class="form-group">
+            <label for="password">รหัสผ่าน:</label>
+            <input type="password" id="password" placeholder="กรุณาใส่รหัสผ่าน">
+        </div>
+
+        <div class="form-group">
+            <label for="product_name">ชื่อสินค้าที่ต้องการ:</label>
+            <input type="text" id="product_name" placeholder="เช่น iPhone 15">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity">จำนวน:</label>
+            <input type="number" id="quantity" value="1" min="1">
+        </div>
+
+        <button class="btn" onclick="startBot()">🚀 เริ่มกดสินค้า</button>
+        <button class="btn btn-secondary" onclick="monitorPrice()">👀 ตรวจสอบราคา</button>
+        <button class="btn btn-secondary" onclick="testConnection()">🔍 ทดสอบการเชื่อมต่อ</button>
+
+        <div id="status" class="status" style="display: none;"></div>
+
+        <div class="features">
+            <h3>ฟีเจอร์ที่มี:</h3>
+            <ul class="feature-list">
+                <li>ล็อกอินอัตโนมัติ</li>
+                <li>ค้นหาสินค้าอัตโนมัติ</li>
+                <li>เพิ่มสินค้าลงตะกร้า</li>
+                <li>ชำระเงินอัตโนมัติ</li>
+                <li>ตรวจสอบราคาแบบเรียลไทม์</li>
+                <li>รองรับหลายเว็บไซต์</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        async function startBot() {
+            const websiteUrl = document.getElementById('website_url').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const productName = document.getElementById('product_name').value;
+            const quantity = document.getElementById('quantity').value;
+
+            if (!websiteUrl || !username || !password || !productName) {
+                showStatus('กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
+                return;
+            }
+
+            showStatus('กำลังเริ่มต้น BOT...', 'info');
+
+            try {
+                const response = await fetch('/run-bot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        website_url: websiteUrl,
+                        username: username,
+                        password: password,
+                        product_name: productName,
+                        quantity: parseInt(quantity)
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus('การซื้อสำเร็จ! ✅', 'success');
+                } else {
+                    showStatus('เกิดข้อผิดพลาด: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showStatus('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+            }
+        }
+
+        async function monitorPrice() {
+            const websiteUrl = document.getElementById('website_url').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const productName = document.getElementById('product_name').value;
+            const targetPrice = prompt('ใส่ราคาเป้าหมาย (บาท):');
+
+            if (!targetPrice || isNaN(targetPrice)) {
+                showStatus('กรุณาใส่ราคาเป้าหมายที่ถูกต้อง', 'error');
+                return;
+            }
+
+            showStatus('เริ่มตรวจสอบราคา...', 'info');
+
+            try {
+                const response = await fetch('/monitor-price', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        website_url: websiteUrl,
+                        username: username,
+                        password: password,
+                        product_name: productName,
+                        target_price: parseFloat(targetPrice)
+                    })
+                });
+
+                const result = await response.json();
+                showStatus(result.message, result.success ? 'success' : 'error');
+
+            } catch (error) {
+                showStatus('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+            }
+        }
+
+        async function testConnection() {
+            const websiteUrl = document.getElementById('website_url').value;
+
+            if (!websiteUrl) {
+                showStatus('กรุณาใส่ URL เว็บไซต์', 'error');
+                return;
+            }
+
+            showStatus('กำลังทดสอบการเชื่อมต่อ...', 'info');
+
+            try {
+                const response = await fetch('/test-connection', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        website_url: websiteUrl
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showStatus('เชื่อมต่อสำเร็จ! 🌐', 'success');
+                } else {
+                    showStatus('ไม่สามารถเชื่อมต่อได้: ' + result.message, 'error');
+                }
+            } catch (error) {
+                showStatus('เกิดข้อผิดพลาดในการเชื่อมต่อ', 'error');
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status ' + type;
+            statusDiv.style.display = 'block';
+
+            // ซ่อนข้อความหลังจาก 5 วินาที
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // ซ่อน status เมื่อเริ่มต้น
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('status').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
