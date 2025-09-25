@@ -1,0 +1,19 @@
+{
+  "name": "click-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Simple configurable bot to open a page and click a product on a website using Playwright",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/index.js",
+    "bot": "node src/index.js",
+    "playwright:install": "npx --yes playwright install --with-deps",
+    "playwright:install-deps": "npx --yes playwright install-deps",
+    "test": "echo 'No tests yet' && exit 0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "playwright": "^1.46.0"
+  }
+}
