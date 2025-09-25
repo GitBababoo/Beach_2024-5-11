@@ -1,0 +1,35 @@
+# Copy this file to config.yaml and adjust selectors/URL for your target site.
+
+url: "https://example.com/product/123"
+
+# CSS or XPath selectors to detect availability and to click.
+# If check_selector is omitted, click_selector will be used for checks as well.
+check_selector: "button.add-to-cart"
+click_selector: "button.add-to-cart"
+
+# Optional keyword heuristics. If any of available_text_contains is found in the
+# button text, it is considered available. If any of unavailable_text_contains
+# is found, it is considered unavailable.
+available_text_contains:
+  - "Add to cart"
+  - "In stock"
+unavailable_text_contains:
+  - "Out of stock"
+  - "Unavailable"
+
+# Polling and runtime controls
+poll_interval_seconds: 2.5
+max_run_minutes: 20
+
+# Browser settings
+headless: true
+wait_until: "domcontentloaded"  # one of: load, domcontentloaded, networkidle
+navigation_timeout_ms: 30000
+
+# Optional request customization
+user_agent: null
+extra_headers: {}
+cookies: []
+
+# On successful click, save a screenshot to this path (set to null to disable)
+save_screenshot_on_click: "success.png"
