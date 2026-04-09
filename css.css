@@ -1,0 +1,36 @@
+
+    /* ปรับแต่งสไตล์ */
+body {
+    background: radial-gradient(circle, rgba(0, 200, 150, 1), rgba(0, 50, 30, 0.9));
+    color: #e0ffee;
+    font-family: 'Orbitron', sans-serif;
+}
+h1 {
+    text-shadow: 0px 4px 8px rgba(0, 255, 150, 0.8);
+    font-size: 3em;
+    color: #00ff80;
+    animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+.futuristic-button {
+    background: rgba(0, 255, 150, 0.7);
+    border: 2px solid rgba(0, 255, 150, 0.8);
+    color: #ffffff;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-shadow: 0px 4px 10px rgba(0, 255, 150, 0.8);
+    box-shadow: 0px 0px 20px rgba(0, 255, 150, 0.8);
+    transition: all 0.3s ease;
+}
+.futuristic-button:hover {
+    background-color: rgba(0, 255, 180, 1);
+    box-shadow: 0px 0px 25px rgba(0, 255, 180, 1), 0px 0px 50px rgba(0, 255, 180, 0.5);
+    transform: scale(1.1);
+}
+.glass-panel {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 255, 150, 0.2);
+    backdrop-filter: blur(15px);
+    padding: 20px;
+    margin-top: 20px;
+}
